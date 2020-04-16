@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Page Content -->
+
+<div class="container-fluid">
+    <h1>Funcionário</h1>
+    <hr>
+
+    <form class="col-5 espacamento" method="post">
+        {% csrf_token %}
+
+        <div class="botao">
+            <img class="displayed" src="{% static 'css/imagens/resume.png' %}" alt="" width="100" height="100">
+        </div>
+
+        <fieldset>
+            <!-- Campo de Nome -->
+            <div class="campos form-group2">
+                <input type="text"
+                       name="{{ form.name.name }}"
+                       value="{{ form.name.value }}"
+                       class="form-control"
+                       id="exampleInputNome"
+                       aria-describedby="nomeHelp"
+                       placeholder="Alterar Nome">
+
+                <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                  {% for error in form.name.errors %}
+                    {{error}}
+                  {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Campo de Email -->
+            <div class="campos form-group2">
+                <input type="email"
+                       name="{{ form.email.name }}"
+                       value="{{ form.email.value }}"
+                       class="form-control"
+                       id="exampleInputEmail1"
+                       aria-describedby="emailHelp"
+                       placeholder="Alterar e-mail">
+
+                <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                  {% for error in form.email.errors %}
+                    {{error}}
+                  {% endfor %}
+                </ul>
+            </div>
+        </fieldset>
+
+        <!-- Botões -->
+        <div class="botao">
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Voltar</a>
+        </div>
+
+        {% if request.user.is_staff and not user.is_staff %}
+            {% if user.is_active %}
+                <div class="botao">
+                    <a class="btn btn-danger" style="color: white" data-toggle="modal" data-target="#desativarFuncionario">Desativar Funcionário</a>
+                </div>
+
+                <div class="modal fade" id="desativarFuncionario" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalCenterTitle">Desativar Funcionário</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            Clique "Desativar" para desativar o funcionário {{ user.name }}. <div>Ele pode ser ativado posteriormente.</div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-info" data-dismiss="modal">Voltar</button>
+                          <a href="{% url 'desativar_funcionario' user.id %}" type="button" class="btn btn-outline-danger">Desativar</a>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="botao">
+                    <a href="{% url 'reativar_funcionario' user.pk %}" class="btn btn-success btn-icon-split">Reativar Funcionário</a>
+                </div>
+            {% endif %}
+        {% endif %}
+    </form>
+</div>
+
+
+{% endblock %}

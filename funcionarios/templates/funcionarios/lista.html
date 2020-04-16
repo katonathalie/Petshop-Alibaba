@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Page Content -->
+
+<div id="content-wrapper">
+
+    <div class="container-fluid">
+
+        <h1>Funcionários</h1>
+        <hr>
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Lista de Funcionários
+
+            <div class="float-right float-sm-right float-md-right float-lg-right float-xl-right">
+                <a href="{% url 'cadastrar_funcionario' %}" class="btn btn-success btn-icon-split ">
+                <span class="icon text-white-50">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Cadastrar Funcionário</span>
+                </a>
+            </div>
+
+          </div>
+          <div class="card-body">
+
+              {% if messages %}
+                {% for message in messages %}
+                    <div>
+                        <center><p style="color: green"> {{ message }}</p></center>
+                    </div>
+                {% endfor %}
+              {% endif %}
+
+            <div class="table-responsive">
+            </thead>
+              <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Data de Cadastro</th>
+                    <th>Último Acesso</th>
+                    <th>Opções</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                      <tr>
+                        <th> {{ user.id }} </th>
+                        <td> {{ user.name }}
+                            ( {% if user.is_active %}
+                                <span style="color: green">Ativo</span>
+                            {% else %}
+                                <span style="color: red">Inativo</span>
+                            {% endif %} )
+                        </td>
+                        <td> {{ user.email }} </td>
+                        <td> {{ user.creation_date| date:"d/m/Y" }} </td>
+                        {% if user.last_login %}
+                            <td>{{ user.last_login | date:"d/m/Y"}}</td>
+                        {% else %}
+                            <td>-</td>
+                        {% endif %}
+                        <td>
+                            <a title="editar" class="btn btn-circle btn-sm" href="{% url 'editar_funcionario' user.id %}"><i class="fas fa-edit"></i></a>
+                            {% if not user.is_staff and user.is_active %}
+                                <a title="desativar" class="btn btn-sm ml-2"><i class="fas fa-trash" data-toggle="modal" data-target="#desativarFuncionario{{user.id}}"></i></a></i></a>
+                            {% endif  %}
+                            {% if not user.is_staff and not user.is_active %}
+                                <a title="ativar" class="btn btn-sm ml-2"><i class="fas fa-check-square" data-toggle="modal" data-target="#ativarFuncionario{{user.id}}"></i></a></i></a>
+                            {% endif %}
+                        </td>
+                      </tr>
+
+                      <!-- Modal para DESATIVAR -->
+                      <div class="modal fade" id="desativarFuncionario{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Desativar funcionário</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                Clique "Desativar" para desativar o funcionário <strong>{{ user.name }}</strong>. Ele pode ser reativado posteriormente.
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-info" data-dismiss="modal">Voltar</button>
+                              <a href="{% url 'desativar_funcionario' user.id %}" class="btn btn-danger">Desativar</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                        <!--Fim Modal-->
+
+                    <!-- Modal para ATIVAR -->
+                      <div class="modal fade" id="ativarFuncionario{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitleAtivar">Ativar Funcionário</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                Clique "Ativar" para ativar o funcionário <strong>{{ user.name }}</strong>. Ele pode ser desativado posteriormente.
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-info" data-dismiss="modal">Voltar</button>
+                                <a href="{% url 'reativar_funcionario' user.pk %}" class="btn btn-success btn-icon-split">Ativar Funcionário</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                        <!--Fim Modal-->
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        <div class="card-footer small text-muted">Nunca compartilhe dados pessoais com terceiros e sempre trate tais informações pessoais de maneira estritamente confidencial.</div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+
+{% endblock %}

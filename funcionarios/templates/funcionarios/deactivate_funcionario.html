@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Desativar Funcionário</title>
+</head>
+<body>
+
+    <h1>Desativar Funcionário</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <p> <strong>Nome:</strong> {{ form.name.value }} </p>
+        <p> <strong>E-mail:</strong> {{ form.email.value }} </p>
+
+        <button>
+            <a href="{% url 'lista' %}">Voltar</a>
+        </button>
+
+        <button type="submit"> Desativar </button>
+
+    </form>
+
+</body>
+</html>

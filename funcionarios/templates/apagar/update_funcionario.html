@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Funcionário</title>
+</head>
+<body>
+
+    <h1>Editar Funcionário</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button>
+            <a href="{% url 'lista' %}">Voltar</a>
+        </button>
+
+        <button type="submit"> Salvar </button>
+    </form>
+
+
+
+</body>
+</html>

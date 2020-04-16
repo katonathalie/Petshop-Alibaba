@@ -1,0 +1,8 @@
+.venv/
+<<<<<<< HEAD
+/venv/
+.myvenv/
+/myvenv/
+=======
+/venv/
+>>>>>>> a0988a78d90811960af464fd7b92c71d0dab1885

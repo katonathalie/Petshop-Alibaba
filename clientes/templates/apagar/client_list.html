@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+</head>
+<body>
+    <h3>Clientes</h3>
+    {% if messages %}
+        {% for message in messages %}
+            <div>
+                <p style="color: green"><strong> {{ message }} </strong></p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% for client in clients %}
+    <ul>
+        <strong><li>{{ client.name }}</strong></li>
+        <p>Endereço: {{ client.rua }}, {{ client.numero }}, {{ client.bairro }}</p>
+        <p>CPF: {{ client.cpf }}</p>
+        <p>Data de Nascimento: {{ client.date_of_birth }}</p>
+
+        <p><a href="{% url 'pet_list' client.pk %}">Animais</a></p>
+
+        <p><a href="{% url 'client_update' client.pk %}">Editar Cliente</a></p>
+
+        <p><a href="{% url 'client_delete' client.pk %}"> Apagar </a></p>
+    </ul>
+    {% endfor %}
+    <a href="{% url 'cadastrar_cliente' %}">Cadastrar Cliente</a>
+
+    <p><a href="{% url 'home' %}">Home</a></p>
+
+
+
+
+</body>
+</html>

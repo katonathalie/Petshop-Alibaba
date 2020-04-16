@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+        <h1>Vendas</h1>
+        <hr>
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Lista de Vendas
+
+
+            <div class="float-right float-sm-right float-md-right float-lg-right float-xl-right">
+                <a href="{% url 'cadastrar_vendas' %}" class="btn btn-success btn-icon-split ">
+                <span class="icon text-white-50">
+                  <i class="fas fa-shopping-cart"></i>
+                </span>
+                <span class="text">Nova Venda</span>
+                </a>
+            </div>
+
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+            </thead>
+              <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th><center>Código</center></th>
+                    <th><center>Cliente</center></th>
+                    <th><center>Funcionário</center></th>
+                    <th><center>Data da Venda</center></th>
+                    <th><center>Valor Total</center></th>
+                    <th><center>Opções</center></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% if messages %}
+                {% for message in messages %}
+                <div>
+                    <p style="color: gray"><strong> {{ message }} </strong></p>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                {% for venda in vendas %}
+                <tr>
+                    <th><center>{{ venda.id }}</center></th>
+                    <td><center>{{ venda.cliente }}</center></td>
+                    <td><center>{{ venda.funcionario }}</center></td>
+                    <td><center>{{ venda.date | date:"d/m/Y" }}</center></td>
+                    <td><center>{{ venda.valor_total }}</center></td>
+                <td>
+                    <center><a href="{% url 'cupom_fiscal' venda.pk %}" class="btn btn-circle btn-sm" target="_blank"><i class="fas fa-file-alt"></i></a></center>
+                </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Nunca compartilhe dados pessoais com terceiros e sempre trate tais informações pessoais de maneira estritamente confidencial.</div>
+
+        </div>
+        </div>
+    </div>
+                <!-- /.container-fluid -->
+{% endblock %}

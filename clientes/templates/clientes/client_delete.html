@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apagar Cliente</title>
+</head>
+<body>
+
+    <h1>Apagar Cliente</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <p> <strong>Nome:</strong> {{ form.name.value }} </p>
+        <p> <strong>Data de Nascimento:</strong> {{ form.date_of_birth.value }} </p>
+        <p> <strong>CPF:</strong> {{ form.cpf.value }} </p>
+
+        <h5 style="color: red">Atenção: alteração não pode ser desfeita!</h5>
+        <button type="submit"> Apagar </button>
+    </form>
+        <a href="{% url 'client_list' %}">Voltar</a>
+
+
+</body>
+</html>

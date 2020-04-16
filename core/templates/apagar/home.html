@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PetShop</title>
+
+
+        PETSHOP HOME TEST ...
+
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'logout' %}">Sair</a></li>
+    {% endif %}
+
+    <li><a href="{% url 'edit_password' %}">Alterar Senha</a></li>
+
+    {% if user.is_staff %}
+
+        <li><a href="{% url 'lista' %}">Funcionários</a></li>
+        <li><a href="{% url 'client_list' %}">Clientes</a></li>
+        <li><a href="{% url 'produto_list' %}">Produtos</a></li>
+        <li><a href="{% url 'servico_list' %}">Serviços</a></li>
+        <li><a href="{% url 'vendas_list' %}">Vendas</a></li>
+
+    {% endif %}
+
+</head>
+<body>
+
+</body>
+</html>
+

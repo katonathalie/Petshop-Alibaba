@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Relatório de Vendas</title>
+    <style type="text/css">
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 5px;
+            background-color: #fff;
+        }
+        .table th,
+        .table td {
+            padding: 5px;
+            vertical-align: top;
+            text-align: center;
+        }
+        .table th {
+            border-top: none;
+            border-bottom: 1px solid #000;
+        }
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #000;
+        }
+        .table tbody + tbody {
+            border-top: 2px solid #000;
+        }
+        .table .table {
+            background-color: #fff;
+        }
+        .list-group {
+            display: block;
+            width: 100%;
+            list-style: none;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .list-group p {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            list-style: none;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+    <body>
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <center>
+                        <img class="displayed" src="core/static/css/imagens/pet.png" alt="" width="100" height="100">
+                        <H1>PETSHOP ALIBABÁ</H1>
+                    <hr></center>
+                </div>
+                <div><strong>Período: </strong>{{ data_inicial | date:"d/m/Y" }} a {{ data_final | date:"d/m/Y" }}</div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="100">Código</th>
+                        <th width="150">Data</th>
+                        <th width="200">Cliente</th>
+                        <th width="100">Funcionário</th>
+                        <th width="150">Valor da Venda</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for venda in vendas %}
+                        <tr>
+                        <td width="100">{{ venda.id }}</td>
+                        <td width="150">{{ venda.date | date:"d/m/Y" }}</td>
+                        <td width="200">{{ venda.cliente }}</td>
+                        <td width="150">{{ venda.funcionario }}</td>
+                        <td width="100">{{ venda.valor_total }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <th width="200" style="font-size: 12px">TOTAL VENDIDO</th>
+                        <th width="150"> </th>
+                        <th width="200"> </th>
+                        <th width="100"> </th>
+                        <th width="150" style="font-size: 12px">R$ {{ total_vendido }}</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+        <h1>Cadastrar Produto</h1>
+        <hr>
+
+        <form class="col-5 espacamento" method="POST">
+            {% csrf_token %}
+            <div class="botao">
+                {% if success %}
+                    <p style="color: green" align="center">Produto cadastrado com sucesso!</p>
+                {% endif %}
+                <img class="displayed" src="{% static 'css/imagens/questionnaire.png' %}" alt="" width="100" height="100">
+            </div>
+            <fieldset>
+                <div style="display: none">
+                {{ form.category }} <!-- campo não é exibido -->
+                </div>
+                  {% for error in form.category.errors %}
+                    {{error}}
+                  {% endfor %}
+
+                <!-- Campo de Nome/Código -->
+                <div class="row">
+                  <div class="campos form-group2 col-9">
+                    <label>Nome do Produto</label>
+                    <input type="text" class="form-control" id="exampleNome" required name="{{ form.name.name }}">
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.name.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  <div class="campos form-group2 col-3">
+                    <label>Código</label>
+                    <input type="number" class="form-control" id="exampleCodigo" required name="{{ form.code.name }}">
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.code.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Campo de Quantidade/Validade -->
+                <div class="row">
+                  <div class="campos form-group2 col-6">
+                    <label>Quantidade</label>
+                    <input type="number" class="form-control" id="exampleQuantidade" required name="{{ form.quantity.name }}">
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.quantity.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  <div class="campos form-group2 col-6">
+                    <label>Data de validade</label>
+                    <input type="date" class="form-control" id="exampleValidade" name="{{ form.expiration_date.name }}">
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.expiration_date.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Campo de Preço de Compra/Venda -->
+                <div class="row">
+                  <div class="campos form-group2 col-6">
+                    <label>Preço de Compra</label>
+                    <input type="number" step="0.01" class="form-control" id="exampleValorCompra" required name="{{ form.price_of_buy.name }}">
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.price_of_buy.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  <div class="campos form-group2 col-6">
+                    <label>Preço de Venda</label>
+                    <input type="number" step="0.01" class="form-control" id="exampleVenda" required name="{{ form.price_of_sale.name }}">
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.price_of_sale.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Campo de Descrição -->
+                <div class="row">
+                  <div class="campos form-group2 col-12">
+                    <label>Descrição do Produto</label>
+                    <textarea class="form-control" id="exampleDescrição" rows="3" name="{{ form.description.name }}"></textarea>
+                  </div>
+                </div>
+
+            </fieldset>
+            <!-- Botões -->
+            <div class="botao">
+                <button type="submit" class="btn btn-outline-primary">Cadastrar Produto</button>
+                <a href="{% url 'produto_list' %}" class="btn btn-outline-danger">Cancelar</a>
+            </div>
+        </form>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Menu - Cadastro de Funcionários -->
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'css/imagens/check-form.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+            Cadastro de Clientes
+        </a>
+    </nav>
+
+    <!-- Formulário de Cadastro -->
+    
+    <form class="espacamento" method="post">
+        {% csrf_token %}
+
+        <fieldset>
+            <!-- Campo de Nome -->
+            <label>Nome</label>
+            <input type="text"
+                   name="{{ form.name.name }}"
+                   class="form-control"
+                   id="exampleNome"
+                   placeholder="Digite o nome completo"
+                   required>
+
+                <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                  {% for error in form.name.errors %}
+                    {{error}}
+                  {% endfor %}
+                </ul>
+
+            <!-- Campo de CPF e Data de Nascimento -->
+            <div class="row">
+                <div class="col-4 campos">
+                    <label>CPF</label>
+                    <input type="number"
+                           name="{{ form.cpf.name }}"
+                           class="form-control"
+                           id="exampleCPF"
+                           maxlength="11"
+                           minlength="11"
+                           placeholder="Ex.: 123.123.123-12"
+                           required>
+                </div>
+
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.cpf.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+
+                <div class="col-4 campos">
+                    <label>Telefone</label>
+                    <input type="number"
+                           name="{{ form.telephone.name }}"
+                           class="form-control"
+                           id="exampleTelefone"
+                           maxlength="11"
+                           minlength="11"
+                           placeholder="Ex.: (83) 91234-5678"
+                           required>
+                </div>
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.telephone.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+
+                <div class="col-4 campos">
+                    <label>Data de Nascimento</label>
+                    <input type="date"
+                           name="{{ form.date_of_birth.name }}"
+                           class="form-control"
+                           id="exampleData">
+                </div>
+                 <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.date_of_birth.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+            </div>
+
+            <!-- Campo de Endereço -->
+            <div class="row">
+                <div class="col-8 campos">
+                    <label>Endereço</label>
+                    <input type="text"
+                           name="{{ form.rua.name }}"
+                           class="form-control"
+                           id="exampleEndereco"
+                           placeholder="Digite o endereço">
+                </div>
+                <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.rua.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+
+                <div class="col-4 campos">
+                    <label>CEP</label>
+                    <input type="number"
+                           name="{{ form.cep.name }}"
+                           class="form-control"
+                           maxlength="8"
+                           minlength="8"
+                           id="exampleCEP"
+                           placeholder="Digite o CEP">
+                </div>
+                <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.cep.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+            </div>
+
+            <div class="row">
+                <div class="col-5 campos">
+                    <label>Bairro</label>
+                    <input type="text"
+                           name="{{ form.bairro.name }}"
+                           class="form-control"
+                           id="exampleBairro"
+                           placeholder="Digite o bairro">
+
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.bairro.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="col-5 campos">
+                    <label>Cidade</label>
+                    <input type="text"
+                           name="{{ form.cidade.name }}"
+                           class="form-control"
+                           id="exampleCidade"
+                           placeholder="Digite a cidade">
+
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.cidade.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="col-2 campos">
+                    <label>Nº</label>
+                    <input type="number"
+                           name="{{ form.numero.name }}"
+                           class="form-control"
+                           id="exampleNumero"
+                           placeholder="Número">
+
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.numero.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <label class="campos">Complemento</label>
+                <input type="text"
+                       name="{{ form.complemento.name }}"
+                       class="form-control"
+                       id="exampleComplemento"
+                       placeholder="Ex.: casa, apt...">
+
+                <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                  {% for error in form.complemento.errors %}
+                    {{error}}
+                  {% endfor %}
+                </ul>
+            </div>
+        </fieldset>
+
+        <!-- Botões -->
+        <div class="botao_cadastro">
+            <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
+            <a href="{% url 'home' %}" class="btn btn-outline-danger">Cancelar</a>
+        </div>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+        <h1>Serviços</h1>
+        <hr>
+        {% if messages %}
+        {% for message in messages %}
+            <div>
+                <center><p style="color: green; align: center">{{ message }}</p></center>
+            </div>
+        {% endfor %}
+        {% endif %}
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Lista de Serviços
+            <div class="float-right float-sm-right float-md-right float-lg-right float-xl-right">
+              <a href="{% url 'servico_create' %}" class="btn btn-success btn-icon-split ">
+                <span class="icon text-white-50">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Adicionar Serviço</span>
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+            </thead>
+              <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th width="100"><center>Código</center></th>
+                    <th><center>Nome</center></th>
+                    <th width="100"><center>Preço</center></th>
+                    <th width="200"><center>Data de Cadastro</center></th>
+                    <th><center>Opções</center></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for servico in servicos %}
+                  <tr>
+                    <th width="100"><center>{{ servico.code }}</center></th>
+                    <td><center>{{ servico.name }}</center></td>
+                    <td width="100"><center>R$ {{ servico.price_of_sale }}</center></td>
+                    <td width="200"><center>{{ servico.created_at | date:"d/m/Y" }}</center></td>
+                    <td width="200">
+                        <center><a title="editar" href="{% url 'servico_update' servico.pk %}" class="btn btn-circle btn-sm"><i class="fas fa-edit"></i></a>
+                        <a title="excluir" class="btn btn-sm ml-2"><i class="fas fa-trash" data-toggle="modal" data-target="#excluirServiço{{servico.id}}"></i></a>
+                        </center>
+                    </td>
+                  </tr>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="excluirServiço{{servico.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalCenterTitle">Excluir Serviço</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            Clique "Excluir" para excluir {{ servico.name }}. Não é possível reverter esta ação!
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-info" data-dismiss="modal">Voltar</button>
+                          <a href="{% url 'servico_delete' servico.pk %}" class="btn btn-danger">Excluir</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <!--Modal-->
+
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Nunca compartilhe dados pessoais com terceiros e sempre trate informações pessoais de maneira estritamente confidencial.</div>
+
+        </div>
+        </div>
+    </div>
+
+{% endblock %}

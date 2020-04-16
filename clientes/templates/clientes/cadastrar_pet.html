@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Menu - Cadastro de Funcionários -->
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'css/imagens/dog-logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+            Cadastro de Animais
+        </a>
+    </nav>
+
+    <!-- Formulário de Cadastro -->
+    
+    <form class="espacamento" method="post">
+        {% csrf_token %}
+
+        {% if success %}
+            <p style="color: green; align: center">Animal cadastrado com sucesso!</p>
+        {% endif %}
+
+        <fieldset>
+            <!-- Campo de CPF e Data de Nascimento -->
+            <div class="row">
+                <div class="col-6">
+                    <label>Nome do animal</label>
+                    <input name="{{ form.name.name }}"
+                           type="text"
+                           class="form-control"
+                           id="exampleNomeAnimal"
+                           placeholder="Digite o nome" required>
+
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.name.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="col-4">
+                    <label>Data de Nascimento</label>
+                    <input name="{{ form.date_of_birth.name }}"
+                           type="date"
+                           class="form-control"
+                           id="data"
+                           required>
+
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.date_of_birth.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="col-2">
+                    <label>Idade</label>
+                    <input  name="{{ form.age.name }}"
+                            type="num"
+                            id="idade"
+                            class="form-control"
+                            placeholder="Idade"
+                            readonly>
+
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in form.age.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Campo de Raça e Espécie -->
+            <div class="row">
+                    <div class="col-4 campos">
+                        <label>Espécie</label>
+                        <div class="form-group">
+                            {{ form.species }}
+
+                            <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                              {% for error in form.species.errors %}
+                                {{error}}
+                              {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-4 campos">
+                        <label>Raça</label>
+                        <input name="{{ form.breed.name }}"
+                               type="text"
+                               class="form-control"
+                               id="exampleRaca"
+                               placeholder="Digite a raça do animal"
+                               required>
+
+                        <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                          {% for error in form.breed.errors %}
+                            {{error}}
+                          {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="col-4 campos">
+                        <label>Gênero</label>
+                        <div class="form-group">
+                            {{ form.gender }}
+
+                            <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                              {% for error in form.gender.errors %}
+                                {{error}}
+                              {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Botões -->
+            <div class="botao_cadastro">
+                <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
+                <a href="{% url 'pet_list' owner.pk %}" class="btn btn-outline-danger">Voltar</a>
+            </div>
+        </fieldset>
+    </form>
+
+    <!-- Script para calcular a idade do Pet -->
+    <script>
+    document.getElementById("data").addEventListener('change', function() {
+        var data = new Date(this.value);
+        if(isDate_(this.value) && data.getFullYear() > 1800)
+            document.getElementById("idade").value = calculateAge(this.value);
+      });
+    
+      function calculateAge(dobString) {
+        var dob = new Date(dobString);
+        var currentDate = new Date();
+        var currentYear = currentDate.getFullYear();
+        var birthdayThisYear = new Date(currentYear, dob.getMonth(), dob.getDate());
+        var age = currentYear - dob.getFullYear();
+        if(birthdayThisYear > currentDate) {
+          age--;
+        }
+        return age;
+      }
+    
+      function calcular(data) {
+        var data = document.form.nascimento.value;
+        alert(data);
+        var partes = data.split("/");
+        var junta = partes[2]+"-"+partes[1]+"-"+partes[0];
+        document.form.idade.value = (calculateAge(junta));
+      }
+    
+      var isDate_ = function(input) {
+              var status = false;
+              if (!input || input.length <= 0) {
+                status = false;
+              } else {
+                var result = new Date(input);
+                if (result == 'Invalid Date') {
+                  status = false;
+                } else {
+                  status = true;
+                }
+              }
+              return status;
+      }
+    </script>
+
+{% endblock %}

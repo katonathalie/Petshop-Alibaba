@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+        <h1>Relatório de Vendas</h1>
+        <hr>
+
+        <form class="col-5 espacamento" method="POST">
+            {% csrf_token %}
+            <div class="botao">
+                <img class="displayed" src="{% static 'css/imagens/questionnaire.png' %}" alt="" width="70" height="70">
+            </div>
+            <fieldset>
+
+                <!-- Campo de Data Inicial/Data Final -->
+                <div class="row">
+                    <div class="campos form-group2 col-6">
+                        <label>Data Incial</label>
+                        <div>{{ form.data_inicial }}</div>
+                        <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                        {% for error in form.name.errors %}
+                        {{error}}
+                        {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="campos form-group2 col-6">
+                        <label>Data Final</label>
+                        <div>{{ form.data_final }}</div>
+                        <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                        {% for error in form.name.errors %}
+                        {{error}}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            </fieldset>
+
+            <!-- Botões -->
+            <div class="botao">
+                <button type="submit" class="btn btn-success btn-icon-split">Emitir Relatório</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
+{% endblock %}

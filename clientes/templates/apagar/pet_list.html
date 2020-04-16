@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animais</title>
+</head>
+<body>
+    <h1>Cliente: {{ owner.name }}</h1>
+
+    <h3>Animais</h3>
+
+    {% if messages %}
+    {% for message in messages %}
+        <div>
+            <p style="color: green"><strong> {{ message }} </strong></p>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    {% for pet in pets %}
+    <ul>
+        <strong><li>Nome do Pet: {{ pet.name }}</strong></li>
+        <p>Idade: {{ pet.age }}</p>
+        <p>Data de Nascimento: {{ pet.date_of_birth }}</p>
+
+        <p><a href="{% url 'pet_update' pet.pk %}">Editar Animal</a></p>
+        <p><a href="{% url 'pet_delete' pet.pk %}">Apagar Animal</a></p>
+    </ul>
+    {% endfor %}
+
+    <p><a href="{% url 'cadastrar_pet' owner.pk %}">Adicionar Animal</a></p>
+    <a href="{% url 'client_list' %}">Voltar</a>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apagar Animal</title>
+</head>
+<body>
+
+    <h1>Apagar Cliente</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <p> <strong>Nome do Animal:</strong> {{ pet.name }} </p>
+        <p> <strong>Data de Nascimento:</strong> {{ pet.date_of_birth }} </p>
+
+        <h5 style="color: red">Atenção: alteração não pode ser desfeita!</h5>
+        <button type="submit"> Apagar </button>
+    </form>
+        <a href="{% url 'pet_list' owner.pk %}">Voltar</a>
+
+
+
+
+</body>
+</html>

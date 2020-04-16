@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+    <div id="content-wrapper">
+
+    <div class="container-fluid">
+    <h1>Cadastrar Venda</h1>
+    <hr>
+
+    <form class="col-5 espacamento" method="POST">
+        {% csrf_token %}
+        <div class="botao">
+            <img class="displayed" src="{% static  'css/imagens/shopping-bag.png' %}" alt="" width="100" height="100">
+        </div>
+        <fieldset>
+        {% if success %}
+            <p style="color: green" align="center">Venda cadastrada com sucesso!</p>
+        {% endif %}
+        {% if venda %}
+            <div align="center">
+                <div>
+                    <a href="{% url 'cupom_fiscal' venda.pk %}" class="btn btn-success btn-icon-split " target="_blank">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file-alt"></i>
+                    </span>
+                    <span class="text">Cupom Fiscal</span>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+            <!-- Campo de Cliente/Data -->
+            <div class="row">
+              <div class="campos form-group2 col-6">
+                <label>Cliente</label>
+                <div class="form-group">
+                    {{ vendaForm.cliente }}
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in vendaForm.cliente.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                </div>
+              </div>
+
+              <div class="campos form-group2 col-6">
+                <label>Data da venda</label>
+                    <div>{{ vendaForm.date }}</div>
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in vendaForm.date.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+              </div>
+            </div>
+
+
+            <!-- Campo de Item/Quantidade/Preço -->
+        {{ formset.management_form }}
+        {% for form in formset %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <div class="pure-control-group">
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+
+
+        <div class="row form-row spacer">
+            <div class="campos form-group2 col-8">
+                <label>Item</label>
+                <div>{{ form.item }}</div>
+                <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                  {% for error in form.item.errors %}
+                    {{error}}
+                  {% endfor %}
+                </ul>
+            </div>
+
+            <div class="campos form-group2 col-2">
+                <label style="margin-left: 9px">Quantidade</label>
+                <div>{{ form.quantidade }}</div>
+                <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                  {% for error in form.quantidade.errors %}
+                    {{error}}
+                  {% endfor %}
+                </ul>
+            </div>
+
+            <div class="campos form-group2 col-2">
+                <label style="color: white"> _ </label>
+                <div align="right"><button class="btn btn-success add-form-row">+</button></div>
+            </div>
+
+        </div>
+
+
+        {% endfor %}
+            <div class="row">
+                <div class="campos form-group2 col-5">
+                <label>Forma de Pagamento</label>
+                    <div>{{ vendaForm.forma_pagamento }}</div>
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in vendaForm.forma_pagamento.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                </div>
+            <div class="campos form-group2 col-7">
+                <label>Funcionário</label>
+                    <div>{{ vendaForm.funcionario }}</div>
+                    <ul class="text-center" style="font-size:12px; color: #C53F3F">
+                      {% for error in vendaForm.forma_pagamento.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Botões Cadastrar/Cancelar -->
+        <div class="botao">
+            {% if not venda %}
+            <button type="submit" class="btn btn-outline-primary">Cadastrar Venda</button>
+            {% else %}
+            <a href="{% url 'cadastrar_vendas' %}" class="btn btn-success btn-icon-split">Nova Venda</a>
+            {% endif %}
+            <a href="{% url 'vendas_list' %}" class="btn btn-outline-secondary">Voltar</a>
+        </div>
+
+    </form>
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    function updateElementIndex(el, prefix, ndx) {
+        var id_regex = new RegExp('(' + prefix + '-\\d+)');
+        var replacement = prefix + '-' + ndx;
+        if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+        if (el.id) el.id = el.id.replace(id_regex, replacement);
+        if (el.name) el.name = el.name.replace(id_regex, replacement);
+    }
+    function cloneMore(selector, prefix) {
+        var newElement = $(selector).clone(true);
+        var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+        newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
+            var name = $(this).attr('name')
+            if(name) {
+                name = name.replace('-' + (total-1) + '-', '-' + total + '-');
+                var id = 'id_' + name;
+                $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+            }
+        });
+        newElement.find('label').each(function() {
+            var forValue = $(this).attr('for');
+            if (forValue) {
+              forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+              $(this).attr({'for': forValue});
+            }
+        });
+        total++;
+        $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+        $(selector).after(newElement);
+        var conditionRow = $('.form-row:not(:last)');
+        conditionRow.find('.btn.add-form-row')
+        .removeClass('btn-success').addClass('btn-danger')
+        .removeClass('add-form-row').addClass('remove-form-row')
+        .html('-');
+        return false;
+    }
+    function deleteForm(prefix, btn) {
+        var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+        if (total > 1){
+            btn.closest('.form-row').remove();
+            var forms = $('.form-row');
+            $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+            for (var i=0, formCount=forms.length; i<formCount; i++) {
+                $(forms.get(i)).find(':input').each(function() {
+                    updateElementIndex(this, prefix, i);
+                });
+            }
+        }
+        return false;
+    }
+
+    $(document).on('click', '.add-form-row', function(e){
+        e.preventDefault();
+        cloneMore('.form-row:last', 'form');
+        return false;
+    });
+    $(document).on('click', '.remove-form-row', function(e){
+        e.preventDefault();
+        deleteForm('form', $(this));
+        return false;
+    });
+
+
+    </script>
+
+{% endblock %}

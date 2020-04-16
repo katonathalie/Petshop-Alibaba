@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid">
+
+    <h1>Clientes</h1>
+    <hr>
+    {% if messages %}
+        {% for message in messages %}
+            <div>
+                <center><p style="color: green; align: center"> {{ message }} </p></center>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fas fa-table"></i>
+        Lista de Clientes
+            <div class="float-right float-sm-right float-md-right float-lg-right float-xl-right">
+                <a href="{% url 'cadastrar_cliente' %}" class="btn btn-success btn-icon-split ">
+                <span class="icon text-white-50">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Novo Cliente</span>
+                </a>
+            </div>
+      </div>
+        <div class="card-body">
+        <div class="table-responsive">
+        </thead>
+          <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th width="20%"><center>CPF</center></th>
+                <th width="30%"><center>Nome</center></th>
+                <th width="25%"><center>Data de Nascimento</center></th>
+                <th width="25%"><center>Opções</center></th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                  <tr>
+                    <td width="20%"><strong><center>{{ client.cpf|default_if_none:'-' }}</center></strong></td>
+                    <td width="30%"><center>{{ client.name|default_if_none:'-' }}</center></td>
+                    <td width="25%"><center>{{ client.date_of_birth|default_if_none:'-' }}</center></td>
+                    <td width="25%">
+                    <center>
+                        <a title="ver animal" href="{% url 'pet_list' client.pk %}" class="btn btn-circle btn-sm"><i class="fas fa-dog"></i></a>
+                        <a title="editar" href="{% url 'client_update' client.pk %}" class="btn btn-circle btn-sm"><i class="fas fa-edit"></i></a>
+                        <a title="excluir" class="btn btn-sm ml-2"><i class="fas fa-trash" data-toggle="modal" data-target="#excluirCliente{{client.id}}"></i></a>
+                    </center>
+                    </td>
+                  </tr>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="excluirCliente{{client.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalCenterTitle">Excluir cliente</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            Clique "Exluir" para excluir o cliente do sistema. Não é possível reverter esta ação!
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-info" data-dismiss="modal">Voltar</button>
+                          <a href="{% url 'client_delete' client.pk %}" class="btn btn-danger">Excluir</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer small text-muted">Nunca compartilhe dados pessoais com terceiros e sempre trate tais informações pessoais de maneira estritamente confidencial.</div>
+
+    </div>
+
+<!-- /.container-fluid -->
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title class="fontee">PetShop Alibabá</title>
+
+    <link href="{% static 'css/estilo.css' %}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+        <a class="navbar-brand mr-1" href="{% url 'home' %}">PetShop Alibabá</a>
+
+        <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Navbar Icon -->
+        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+          <div class="input-group">
+            <div class="input-group-append">
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Navbar -->
+
+        <ul class="navbar-nav ml-auto ml-md-0">
+
+          <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span style="color: white; padding-right: 5px">{{ request.user.name }} {% if request.user.is_staff %} (Admin) {% endif %}</span><i class="fas fa-user-circle fa-fw"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="{% url 'editar_funcionario' request.user.id %}">Perfil</a>
+                <a href="{% url 'edit_password' %}" class="dropdown-item">Alterar Senha</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Sair</a>
+            </div>
+          </li>
+        </ul>
+
+      </nav>
+
+      <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="sidebar navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">
+                  <i class="fas fa-fw fa-home"></i>
+                  <span>Página Inicial</span>
+                </a>
+                </li>
+
+                <!-- Produtos -->
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="produtoBar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-fw fa-bone"></i>
+                  <span>Produtos</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    <a class="dropdown-item" href="{% url 'produto_create' %}">Cadastrar Produto</a>
+                    <a class="dropdown-item" href="{% url 'produto_list' %}">Listar Produtos</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'relatorio_estoque' %}" class="dropdown-item" target="_blank">Relatório de Estoque</a>
+                </div>
+                </li>
+
+                <!-- Serviços -->
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="serviçoBar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-fw fa-shower"></i>
+                  <span>Serviços</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    <a class="dropdown-item" href="{% url 'servico_create' %}">Cadastrar Serviço</a>
+                    <a class="dropdown-item" href="{% url 'servico_list' %}">Listar Serviços</a>
+                </div>
+              </li>
+
+                <!-- Vendas -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="vendasBar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-fw fa-money-check-alt"></i>
+                  <span>Vendas</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                  <a class="dropdown-item" href="{% url 'cadastrar_vendas' %}">Cadastrar Venda</a>
+                  <a class="dropdown-item" href="{% url 'vendas_list' %}">Listas Vendas</a>
+                    {% if request.user.is_staff %}
+                    <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'relatorio_vendas' %}">Relatório de Vendas</a>
+                    {% endif %}
+
+                </div>
+              </li>
+
+                <!-- Cliente -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="clienteBar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-fw fa-user"></i>
+                  <span>Clientes</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                  <a class="dropdown-item" href="{% url 'cadastrar_cliente' %}">Cadastrar Cliente</a>
+                  <a class="dropdown-item" href="{% url 'client_list' %}">Listar Clientes</a>
+                </div>
+              </li>
+
+                <!-- Animal -->
+                <!--
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="animalBar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-fw fa-dog"></i>
+                  <span>Animal</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                  <a class="dropdown-item" href="#">Cadastrar Animal (! ! !)</a>
+                  <a class="dropdown-item" href="#">Listar Animais (! ! !)</a>
+                </div>
+              </li>
+              -->
+              
+              <!-- Funcionário -->
+                {% if request.user.is_staff %}
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="funcionarioBar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-fw fa-address-card"></i>
+                        <span>Funcionário</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                        <a class="dropdown-item" href="{% url 'cadastrar_funcionario' %}">Cadastrar Funcionário</a>
+                        <a class="dropdown-item" href="{% url 'lista' %}">Listar Funcionários</a>
+                      </div>
+                    </li>
+                {% endif %}
+            </ul>
+
+            <!-- Page Content -->
+
+            <div id="content-wrapper">
+
+
+                <!-- Conteúdo das páginas -->
+                {% block content %} {% endblock %}
+                <!-- /.container-fluid -->
+
+
+                <!-- Sticky Footer -->
+                <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                    <span>Copyright © PetShop Alibabá 2019</span>
+                    </div>
+                </div>
+                </footer>
+
+            </div>
+            <!-- /.content-wrapper -->
+
+            </div>
+            <!-- /#wrapper -->
+
+            <!-- Scroll to Top Button-->
+            <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+            </a>
+
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pronto para sair?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Selecione "Sair" abaixo se você estiver pronto para encerrar esta sessão.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="{% url 'logout' %}">Sair</a>
+                </div>
+                </div>
+            </div>
+            </div>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin.min.js' %}"></script>
+
+    <!-- Demo scripts for this page-->
+    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+
+    <!--Botoes para JavaScript para criacao de formularios dinamicos-->
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
+    <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>-->
+
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+
+</body>
+</html>

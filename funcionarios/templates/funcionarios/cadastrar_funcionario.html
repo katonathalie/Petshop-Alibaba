@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- NavBar - Cadastro de Funcionários -->
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'css/imagens/check-form.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+            Cadastro de Funcionários
+        </a>
+    </nav>
+
+    <!-- Formulário de Cadastro -->
+    
+    <form  class="espacamento" method="post">
+        {% csrf_token %}
+
+        {% if success %}
+            <p style="color: green">Funcionário cadastrado com sucesso</p>
+            <p style="color: green">Um e-mail de confirmação foi enviado para {{ email }}.</p>
+        {% endif %}
+
+        <fieldset>
+
+            <label>Nome Completo</label>
+
+            <input type="text"
+                   name="{{ form.name.name }}"
+                   class="form-control"
+                   id="exampleInpuNome"
+                   aria-describedby="nomeHelp"
+                   placeholder="Digite seu nome completo"
+                   required>
+
+            <ul class="text-center" style="font-size:12px; color: #C53F3F">
+              {% for error in form.name.errors %}
+                {{error}}
+              {% endfor %}
+            </ul>
+
+            <div class="campos form-group">
+
+                <label for="exampleInputEmail1">Endereço de e-mail</label>
+
+                <input type="email"
+                       name="{{ form.email.name }}"
+                       class="form-control"
+                       id="exampleInputEmail1"
+                       aria-describedby="emailHelp"
+                       placeholder="Digite seu e-mail"
+                       required>
+            </div>
+
+            <ul class="text-center" style="font-size:12px; color: #C53F3F">
+              {% for error in form.email.errors %}
+                {{error}}
+              {% endfor %}
+            </ul>
+
+            {{ form.password1 }} <!-- campo não é exibido -->
+        </fieldset>
+
+        <div class="botao_cadastro">
+            <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
+            <a class="btn btn-outline-danger" href="{% url 'home' %}">Cancelar</a>
+        </div>
+
+    </form>
+
+{% endblock %}
