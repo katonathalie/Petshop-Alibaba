@@ -60,9 +60,9 @@
         {% for form in formset %}
         {{ form.non_field_errors }}
         {% for field in form %}
-            <div class="pure-control-group">
-                {{ field.errors }}
-            </div>
+            <!--<div class="pure-control-group">-->
+                <!--{{ field.errors }}-->
+            <!--</div>-->
         {% endfor %}
 
 
@@ -80,11 +80,6 @@
             <div class="campos form-group2 col-2">
                 <label style="margin-left: 9px">Quantidade</label>
                 <div>{{ form.quantidade }}</div>
-                <ul class="text-center" style="font-size:12px; color: #C53F3F">
-                  {% for error in form.quantidade.errors %}
-                    {{error}}
-                  {% endfor %}
-                </ul>
             </div>
 
             <div class="campos form-group2 col-2">
@@ -93,9 +88,14 @@
             </div>
 
         </div>
-
+        <p style="font-size:12px; color: #C53F3F">
+          {% for error in form.quantidade.errors %}
+            {{error}}
+          {% endfor %}
+        </p>
 
         {% endfor %}
+
             <div class="row">
                 <div class="campos form-group2 col-5">
                 <label>Forma de Pagamento</label>
@@ -133,7 +133,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
