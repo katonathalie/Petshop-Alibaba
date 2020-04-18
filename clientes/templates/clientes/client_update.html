@@ -15,8 +15,15 @@
           </a>
     </div></h1>
 <hr>
-
-
+    <div style="align: left">
+        {% if messages %}
+        {% for message in messages %}
+            <div>
+                <p style="color: green; align: center"> {{ message }} </p>
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
 <form class="col-5 espacamento" method="POST">
     {% csrf_token %}
 

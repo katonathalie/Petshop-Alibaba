@@ -153,6 +153,6 @@ EMAIL_PORT = 587
 CONTACT_EMAIL = 'PetShop Alibaba'
 
 
-SESSION_COOKIE_AGE = 600 #(600s = 10 minutos de sessão)
+SESSION_COOKIE_AGE = 6000 #(600s = 10 minutos de sessão)
 
 SESSION_SAVE_EVERY_REQUEST = True
