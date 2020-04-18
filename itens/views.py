@@ -31,15 +31,17 @@ def produto_create(request):
     template_name = 'produtos/produto_create.html'
     context = {}
 
-    if(request.method == 'POST'):
+    if (request.method == 'GET'):
+        form = ProdutoForm(request.GET or None)
+    elif(request.method == 'POST'):
         form = ProdutoForm(request.POST, initial={'category': 'Produto'})
 
         if form.is_valid():
             form.save()
             form = ProdutoForm()
             context['success'] = True
-    else:
-        form = ProdutoForm()
+    # else:
+    #     form = ProdutoForm(request.GET or None)
 
     context['form'] = form
 

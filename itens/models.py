@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import MinValueValidator
 
 class ItemManager(models.Manager):
 
@@ -16,8 +16,8 @@ class Item(models.Model):
     created_at = models.DateField('Cadastrado em', auto_now_add=True)
     quantity = models.IntegerField('Quantidade', blank=True, default=0)
     description = models.TextField('Descriçao do item', blank=True)
-    price_of_sale = models.DecimalField('Preço de venda', max_digits=8, decimal_places=2, blank=False, default=0, null=False)
-    price_of_buy = models.DecimalField('Preço de compra', max_digits=8, decimal_places=2, blank=True, default=0, null=False)
+    price_of_sale = models.DecimalField('Preço de venda', validators=[MinValueValidator(0)], max_digits=8, decimal_places=2, blank=False, default=0, null=False)
+    price_of_buy = models.DecimalField('Preço de compra', validators=[MinValueValidator(0)], max_digits=8, decimal_places=2, blank=True, default=0, null=False)
     expiration_date = models.DateField('Data de validade', blank=True, null=True)
     category = models.CharField('Categoria', max_length=8, blank=False, null=False, choices=(('S', 'Serviço'), ('P', 'Produto')))
 
