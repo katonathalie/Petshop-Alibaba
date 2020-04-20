@@ -18,20 +18,15 @@
     <div style="align: left">
         {% if messages %}
         {% for message in messages %}
-            <div>
-                <p style="color: green; align: center"> {{ message }} </p>
-            </div>
+        <p style="color: green;"> {{ message }} </p>
         {% endfor %}
-    {% endif %}
+        {% endif %}
+        {% if success %}
+        <p style="color: green;">Dados de {{ client.name }} atualizados!</p>
+        {% endif %}
     </div>
 <form class="col-5 espacamento" method="POST">
     {% csrf_token %}
-
-    <div>
-    {% if success %}
-        <p style="color: green; align: center">Dados de {{ client.name }} atualizados!</p>
-    {% endif %}
-</div>
 
     <div id="botao">
         <img class="displayed" src="{% static 'css/imagens/resume.png' %}" alt="" width="100" height="100">

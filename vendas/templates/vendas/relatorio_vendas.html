@@ -14,6 +14,12 @@
                 <img class="displayed" src="{% static 'css/imagens/questionnaire.png' %}" alt="" width="70" height="70">
             </div>
             <fieldset>
+                <center><p style="font-size:12px; color: #C53F3F">
+                  {% for error in form.errors %}
+                    {{error}}
+                  {% endfor %}
+                </p></center>
+
 
                 <!-- Campo de Data Inicial/Data Final -->
                 <div class="row">

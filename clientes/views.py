@@ -12,14 +12,15 @@ def create_client(request):
     storaged = messages.get_messages(request)
     cliente = None
 
-    if(request.method == 'POST'):
+    if(request.method == 'GET'):
+        form = ClienteCreateForm(request.GET or None)
+    elif(request.method == 'POST'):
         form = ClienteCreateForm(request.POST)
         if form.is_valid():
             cliente = form.save()
             messages.success(request, 'Cliente incluído com sucesso.')
             return redirect('client_update', id=cliente.id)
-    else:
-        form = ClienteCreateForm()
+
 
     context = {
         'form': form,

@@ -65,3 +65,10 @@ class PeriodoRelatorioVendas(forms.Form):
     data_final = forms.DateField(widget=forms.SelectDateWidget(months=MONTHS,
         attrs={'class': 'form-control', 'style': 'width: 33.333%; display: inline-block;'}))
 
+    def clean(self):
+        start_date = self.cleaned_data.get("data_inicial")
+        end_date = self.cleaned_data.get("data_final")
+        if end_date < start_date:
+            msg = u"End date should be greater than start date."
+            self._errors["A data inicial deve ser menor que a data final."] = self.error_class([msg])
+            # raise forms.ValidationError('Informações incorretas. Verifique os campos.')
